@@ -2,7 +2,7 @@
 #define GL_SILENCE_DEPRECATION
 #endif
 
-// #include <GL/glew.h>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <string>
 
@@ -76,34 +76,21 @@ GLuint createProgram() {
 
     return program;
 }
-int main(void)
-{
-    GLFWwindow* window;
 
-    /* Initialize the library */
-    if (!glfwInit())
-        return -1;
-
-    /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    if (!window)
-    {
-        glfwTerminate();
-        return -1;
-    }
-
-    // std::cout << glGetString(GL_VERSION) << std::endl;
+void createTriangle() {
+    uint8_t points_size, indexes_size;
+    GLuint buffer, ibo;
 
     /* Define the points to create a triangle */
     float points[] = {
         -0.5f, -0.5f,
-         0.0f,  0.5f,
          0.5f, -0.5f,
+         0.5f,  0.5f,
+        -0.5f,  0.5f,
     };
     /* Calculates the size of the array dinamically */
-    uint8_t points_size = *(&points+1) - points;
+     points_size = *(&points+1) - points;
 
-    GLuint buffer;
     glGenBuffers(1, &buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
     glBufferData(GL_ARRAY_BUFFER, points_size*sizeof(float), points, GL_STATIC_DRAW);
@@ -111,9 +98,47 @@ int main(void)
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), 0);
 
+    GLuint indexes[] = {
+        0, 1, 2,
+        2, 3, 0
+    };
+    indexes_size = *(&indexes+1) - indexes;
+
+    glGenBuffers(1, &ibo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexes_size*sizeof(GLuint), indexes, GL_STATIC_DRAW);
+
+}
+
+int main(void)
+{
+    GLFWwindow* window;
+
+    /* Initialize the library */
+    if (!glfwInit()){
+        std::cout << "Error on glfwInit()" << std::endl;
+        return -1;
+    }
+
+    /* Create a windowed mode window and its OpenGL context */
+    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    if (!window)
+    {
+        std::cout << "Error on glfwCreateWindow()" << std::endl;
+        glfwTerminate();
+        return -1;
+    }
+
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
+    if (glewInit() != GLEW_OK) {
+        std::cout << "Error on glewInit" << std::endl;
+    }
+    std::cout << "GL_VERSION: " << glGetString(GL_VERSION) << std::endl;
+
+
+    createTriangle();
     GLuint program = createProgram();
     glUseProgram(program);
 
@@ -124,7 +149,7 @@ int main(void)
         glClear(GL_COLOR_BUFFER_BIT);
 
         /* Draw the binded triangle on the middle of the screen */
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

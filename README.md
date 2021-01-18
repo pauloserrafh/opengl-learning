@@ -1,22 +1,22 @@
 # OpenGL learning
 
 This is a learning repository for dealing with OPENGL.
+Tested under Ubuntu 18.
 
 ## Dependencies
 - glew
 - glfw3
 
 ## Install
-### MAC
-This assumes you have [homebrew](https://brew.sh/) installed on your device.
+### Ubuntu
 
 ```bash
-$ brew install glfw3
+$ sudo apt install libglfw3-dev libglew-dev
 ```
 ## Build
-### MAC
+### Ubuntu
 ```bash
-$ g++ main.cpp -framework OpenGl -std=c++17 -lglfw -lglew -o demo
+$ g++ main.cpp -lGL -lglfw -lGLEW -o demo
 ```
 
 ## Run
