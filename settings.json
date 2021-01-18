@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "iosfwd": "cpp",
+        "string": "cpp"
+    },
+    "editor.renderWhitespace": "all",
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "files.insertFinalNewline": true,
+    "C_Cpp.default.cppStandard": "c++11"
+}
