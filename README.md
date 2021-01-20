@@ -1,6 +1,8 @@
 # OpenGL learning
 
-This is a learning repository for dealing with OPENGL.
+This is a learning repository for dealing with OPENGL and working with shaders,
+specifically with [ShaderToy](www.shadertoy.com) compatible ones
+
 Tested under Ubuntu 18.
 
 ## Dependencies
