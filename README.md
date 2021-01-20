@@ -11,12 +11,12 @@ Tested under Ubuntu 18.
 ### Ubuntu
 
 ```bash
-$ sudo apt install libglfw3-dev libglew-dev
+$ sudo apt install libglfw3-dev libglew-dev libsdl2-dev
 ```
 ## Build
 ### Ubuntu
 ```bash
-$ g++ main.cpp -lGL -lglfw -lGLEW -o demo
+$ g++ main.cpp -lGL -lglfw -lGLEW -lSDL2 -o demo
 ```
 
 ## Run
